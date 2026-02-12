@@ -1,0 +1,19 @@
+services:
+  typescript-app:
+    build:
+      context: .
+    container_name: typescript-app
+    restart: unless-stopped
+    init: true
+    # env_file: ./.env  # Uncomment if .env file exists
+    ports:
+      - "4000:4000" # Exposed by Dockerfile, likely Angular Universal SSR
+    # Add depends_on here if you add external services (e.g., database)
+    # networks: [appnet]  # Uncomment if you add more services and need a custom network
+
+# No external services (databases, caches, etc.) detected in the project structure or Dockerfile.
+# If you add a database or other service, add it here and configure networking/volumes as needed.
+
+# No volumes section needed as there are no persistent data services.
+
+# No custom networks defined as only one service is present.

@@ -1,0 +1,56 @@
+# Node.js dependencies
+node_modules/
+
+# Angular and build caches
+.angular/
+dist/
+build/
+out/
+
+# IDE/editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test and debug artifacts
+test/
+tests/
+*.spec.ts
+*.log
+
+# Version control
+.git/
+.gitignore
+.svn/
+.hg/
+
+# Environment and secrets
+.env*
+*.env
+*.pem
+*.key
+*.crt
+config.local.*
+*.local.yml
+
+# Temporary and local files
+tmp/
+temp/
+*.tmp
+.local/
+local/
+
+# Documentation
+README*
+*.md
+
+docs/
+
+# Miscellaneous
+*.tsbuildinfo
+.editorconfig
+
+# Exclude Docker-related files from ignore (uncomment if needed)
+#!Dockerfile
+#!docker-compose.yml

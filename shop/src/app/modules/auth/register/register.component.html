@@ -1,0 +1,96 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <form [formGroup]="regForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <h2 class="auth-title">Create Your Fairshare account</h2>
+      <div class="form-group-wrapper">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            id="name"
+            formControlName="name"
+            class="form-control"
+            placeholder="Name"
+            [class.is-invalid]="regForm.get('name')?.invalid && regForm.get('name')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="regForm.get('name')?.hasError('required')">
+            Name required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            class="form-control"
+            placeholder="Email"
+            [class.is-invalid]="regForm.get('email')?.invalid && regForm.get('email')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="regForm.get('email')?.hasError('required')">
+            Email required
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            class="form-control"
+            placeholder="Phone Number"
+            [class.is-invalid]="regForm.get('phone')?.invalid && regForm.get('phone')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="regForm.get('phone')?.hasError('required')">
+            Phone number is required
+          </div>
+          <div class="invalid-feedback" *ngIf="regForm.get('phone')?.hasError('pattern')">
+            Please enter a valid phone number
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            class="form-control"
+            placeholder="Password"
+            [class.is-invalid]="regForm.get('password')?.invalid && regForm.get('password')?.touched"
+          />
+          <div class="invalid-feedback" *ngIf="regForm.get('password')?.hasError('required')">
+            Password is required
+          </div>
+          <div class="invalid-feedback" *ngIf="regForm.get('password')?.hasError('minlength')">
+            Password must be at least 6 characters
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input 
+               type="password"
+               id="confirmPassword"
+               formControlName="confirmPassword"
+               class="form-control"
+               placeholder="confirm your password"
+               [class.is-invalid]="regForm.get('confirmPassword')?.invalid && regForm.get('confirmPassword')?.touched">
+               <div class="invalid-feedback" *ngIf="regForm.get('confirmPassword')?.hasError('required')">
+                Please confirm your password
+               </div>
+               <div class="invalid-feedback" *ngIf="regForm.hasError('mismatch') && regForm.get('confirmPassword')?.touched">
+                Passwords do not match
+               </div>
+
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="alert alert-error">
+          {{errorMessage}}
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="regForm.invalid">Register</button>
+      </div>
+    </form>
+    <div class="auth-footer">
+      <p>Already have an account?</p>
+      <a routerLink="/login" class="auth-lin`k">Sign in</a>
+    </div>
+  </div>
+</div>
