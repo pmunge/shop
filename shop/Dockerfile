@@ -42,5 +42,5 @@ USER appuser
 # Expose port 4000 (commonly used for Angular Universal, adjust if needed)
 EXPOSE 4000
 
-# Start the server (adjust if your start script is different)
-CMD ["npm", "start"]
+# Start the server (Angular Universal SSR)
+CMD ["npm", "run", "serve:ssr:shop"]
