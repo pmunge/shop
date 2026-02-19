@@ -32,9 +32,9 @@ export class RegisterComponent {
   ) {
     this.regForm = this.fb.group(
       {
-        name: ['', [Validators.required, Validators.minLength(3)]],
+        firstName: ['', [Validators.required, Validators.minLength(3)]],
+        secondName: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
-        phone: [],
         password: ['', [Validators.required]],
         confirmPassword: ['', [Validators.required]],
       },
@@ -47,18 +47,19 @@ export class RegisterComponent {
   ): ValidationErrors | null => {
     const formGroup = control as FormGroup;
     const password = formGroup.get('password')?.value;
-    const confirmPassword = formGroup.get('confirmpassword')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
 
     return password === confirmPassword ? null : { mismatch: true };
   };
   onSubmit(): void {
     if (this.regForm.invalid) {
       this.regForm.markAllAsTouched();
+      return;
     }
     this.isLoading = true;
     this.errorMessage = '';
 
-    const { confirmpassword, ...userData } = this.regForm.value;
+    const { confirmPassword, ...userData } = this.regForm.value;
 
     this.authService.register(userData).subscribe({
       next: (res) => {

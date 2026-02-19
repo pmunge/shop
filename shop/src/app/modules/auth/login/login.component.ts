@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authservice: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,16 +39,22 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
-       this.isLoading = true;
+       
     }
 
-    
+    this.isLoading = true;    
     const loginDetails = this.loginForm.value;
 
     this.authservice.login(loginDetails).subscribe({
       next: (res) => {
         this.isLoading = false;
         console.log(res);
+        if(this.authservice.getRole() === "ADMIN"){
+          this.router.navigateByUrl("admin")
+        }
+        if(this.authservice.getRole() === "USER"){
+          this.router.navigateByUrl("home")
+        }
       },
       error: (err) => {
         this.isLoading = false;
