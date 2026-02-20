@@ -31,6 +31,7 @@ export function app(): express.Express {
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
+    const token = req.headers.cookie?.split('token=')[1]; 
 
     commonEngine
       .render({
@@ -42,6 +43,7 @@ export function app(): express.Express {
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));
+      
   });
 
   return server;

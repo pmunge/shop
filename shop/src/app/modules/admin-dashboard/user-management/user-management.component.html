@@ -1,1 +1,36 @@
-<p>user-management works!</p>
+<div class=" container">
+    <h2> User Management </h2>
+    <div *ngIf=" isLoading" class="loading-spinner">
+        <p> Loading Users</p>
+    </div>
+
+    <table class="user-table">
+        <thead>
+            <tr>
+               <th>ID</th>    
+               <th>First Name</th>
+               <th>Second Name</th>
+               <th>Email</th>
+               <th>Role</th>
+               <th>Locked</th>
+            </tr>
+        </thead>
+        <tbody> 
+            <tr *ngFor="let user of users">
+                <td>{{user.id}}</td>
+                <td>{{user.firstName}}</td>
+                <td>{{user.secondName}}</td>
+                <td>{{user.role}}</td>
+                <td>{{user.locked}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="selectedUser" class="user-card">
+    <h3>User Details</h3>
+    <hr>
+    <p><strong>Full Name:</strong> {{ selectedUser.name }}</p>
+    <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+    <p><strong>Phone:</strong> {{ selectedUser.phone || 'N/A' }}</p>
+    <button (click)="selectedUser = null" class="btn-close">Close</button>
+  </div>
+</div>

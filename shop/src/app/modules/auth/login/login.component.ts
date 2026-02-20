@@ -9,6 +9,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { AuthService} from '../../../services/auth-service';
+import {TokenService} from '../../../services/token.service';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authservice: AuthService,
+    private authService: AuthService,
+    private tokenService: TokenService,
     private router: Router
   ) {}
 
@@ -45,14 +47,14 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;    
     const loginDetails = this.loginForm.value;
 
-    this.authservice.login(loginDetails).subscribe({
+    this.authService.login(loginDetails).subscribe({
       next: (res) => {
         this.isLoading = false;
         console.log(res);
-        if(this.authservice.getRole() === "ADMIN"){
+        if(this.tokenService.getRole() === "ADMIN"){
           this.router.navigateByUrl("admin")
         }
-        if(this.authservice.getRole() === "USER"){
+        if(this.tokenService.getRole() === "USER"){
           this.router.navigateByUrl("home")
         }
       },

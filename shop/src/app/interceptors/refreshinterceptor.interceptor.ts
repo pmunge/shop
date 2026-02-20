@@ -1,13 +1,15 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import {inject } from '@angular/core'
-import {AuthService} from '../app/services/auth-service';
+import {TokenService} from '../services/token.service';
+import { AuthService} from '../services/auth-service'
 import {catchError, switchMap, throwError} from 'rxjs';
 
-export const refreshinterceptorInterceptor: HttpInterceptorFn = (req, next) => {
+export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
 
-  const authService = inject(AuthService);
+  const tokenService = inject(TokenService);
+  const authService = inject(AuthService)
 
-  const token = authService.getToken();
+  const token = tokenService.getToken();
 
   //attach access token
 
@@ -23,17 +25,17 @@ export const refreshinterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(authReq).pipe(
     catchError((error: HttpErrorResponse) =>{
       if(error.status === 401){
-        const refreshToken =authService.getRefreshToken();
+        const refreshToken =tokenService.getRefreshToken();
 
         if(!refreshToken){
           authService.logout();
           return throwError(() => error);
         }
 
-        return authService.refreshToken(refreshToken).pipe(
+        return tokenService.refreshToken(refreshToken).pipe(
           switchMap((res: any) =>{
             const newToken = res.token;
-            authService.setToken(token);
+            tokenService.setToken(newToken);
 
             //retry original req
             const retryReq = req.clone({

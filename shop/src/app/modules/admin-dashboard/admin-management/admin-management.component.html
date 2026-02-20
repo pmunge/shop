@@ -1,0 +1,85 @@
+<div class="container">
+  <h2>Admin</h2>
+  <button (click)="isModalOpen = true" class="btn-add">Add</button>
+  <table *ngIf="!isLoading">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let a of admins" (click)="getAdmin(a.id)">
+        <td>{{ a.firstName }}{{ a.secondName }}</td>
+        <td>{{ a.email }}</td>
+        <td>{{a.role}}</td>
+        <td>{{a.status}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="modal" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <h3>Register Admin</h3>
+      <form (ngSubmit)="addNewAdmin()">
+        <input
+          [(ngModel)]="admin.firstName"
+          name="fn"
+          placeholder="First Name"
+          required
+        />
+        <input
+          [(ngModel)]="admin.secondName"
+          name="sn"
+          placeholder="Second Name"
+          required
+        />
+        <input
+          [(ngModel)]="admin.email"
+          name="em"
+          placeholder="Email"
+          required
+        />
+        <select [(ngModel)]="admin.role" name="rl">
+          <option value="ADMIN">Admin</option>
+          <option value="USER">User</option>
+        </select>
+        <div class="actions">
+          <button type="button" (click)="isModalOpen = false">Cancel</button>
+          <button type="submit" class="btn-save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal" *ngIf="isDetailsOpen">
+  <div class="modal-content">
+    <h3>Admin Details</h3>
+    
+    <div *ngIf="selectedAdmin">
+      <p><strong>Name:</strong> {{ selectedAdmin.firstName }} {{ selectedAdmin.secondName }}</p>
+      <p><strong>Email:</strong> {{ selectedAdmin.email }}</p>
+
+      <div class="update-field">
+        <label>Update Role:</label>
+        <select [(ngModel)]="admin.role" (change)="changeRole(admin.userId, admin.role)">
+          <option value="ADMIN">Admin</option>
+          <option value="USER">User</option>
+        </select>
+      </div>
+
+      <div class="update-field">
+        <label>Update Status:</label>
+    
+        <select [(ngModel)]="admin.status" (change)="changeStatus(admin.userId, admin.status)">
+          <option value="true">Active</option>
+          <option value="false">Inactive</option>
+        </select>
+      </div>
+    </div>
+
+    <button (click)="isDetailsOpen = false">Close & Refresh</button>
+  </div>
+</div>
+
+</div>

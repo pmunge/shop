@@ -5,7 +5,11 @@ import { ForgotPassword } from './modules/auth/forgot-password/forgot-password.c
 import { ResetPassword } from './modules/auth/reset-password/reset-password.component';
 import { LandingComponent } from './modules/pages/landing/landing.component';
 import { HomeComponent} from './modules/user-dashboard/home/home.component';
-import { AdminComponent} from './modules/admin-dashboard/admin/admin.component'
+import { AdminComponent} from './modules/admin-dashboard/admin/admin.component';
+import { resetGuard} from './guards/reset.guard';
+import {adminGuard} from './guards/admin.guard';
+import {authGuard} from './guards/auth.guard'
+import {UserManagementComponent} from './modules/admin-dashboard/user-management/user-management.component'
 
 export const routes: Routes = [
   { path: '', component: LandingComponent },
@@ -20,10 +24,12 @@ export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'admin',
     component: AdminComponent,
+    canActivate: [adminGuard]
   },
   {
     path: 'forgot',
@@ -32,5 +38,10 @@ export const routes: Routes = [
   {
     path: 'reset',
     component: ResetPassword,
+    canActivate: [resetGuard],
+  },
+  {
+    path: 'users',
+    component: UserManagementComponent,
   }
 ];

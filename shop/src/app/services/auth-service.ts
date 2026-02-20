@@ -1,16 +1,13 @@
-import { Injectable, inject } from '@angular/core';
-import { RegisterRequest } from '../models/User';
-import { AuthResponse } from '../models/User';
-import { RegisterResponse} from '../models/User';
-import { LoginRequest } from '../models/User';
+import { Injectable, Inject, Optional, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment as env } from '../../envs/env';
-
-import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { isFloat32Array } from 'util/types';
+
+import { RegisterRequest, AuthResponse, RegisterResponse, LoginRequest } from '../models/User';
+import { TokenService } from './token.service'
 
 @Injectable({
   providedIn: 'root',
@@ -25,31 +22,28 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private tokenService: TokenService,
   ) {}
 
-  //registration of new users
   register(data: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(this.registerapiUrl, data).pipe(
       tap((res) => console.log('Register Response: ', res)),
       catchError((err) =>
-        throwError(
-          () => new Error(err.error?.message || 'Registration failed'),
-        ),
+        throwError(() => new Error(err.error?.message || 'Registration failed')),
       ),
     );
   }
 
-  //login
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(this.loginapiUrl, credentials, {
         observe: 'response',
-        withCredentials: true,
       })
       .pipe(
         map((res: HttpResponse<AuthResponse>) => {
-          this.setToken(res);
-          this.setRole(res)
+          this.tokenService.setToken(res);
+          this.tokenService.setRole(res);
           if (!res.body) {
             throw new Error('No response body');
           }
@@ -62,43 +56,15 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-  }
-
-  getToken(): string | null {
-    return localStorage.getItem('token');
-  }
-  getRole(): string | null{
-    return localStorage.getItem('role')
-  }
-  getRefreshToken(){
-    return localStorage.getItem('refreshToken')
-  }
-  
-  refreshToken(refreshToken: String){
-    return this.http.post('/auth/refresh', {refreshToken})
-  }
-
-  setToken(res: any): string | null {
-    const token =  res.body?.data?.token;
-    if (token) {
-      localStorage.setItem('token', token);
-      return token;
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      localStorage.removeItem('refreshToken');
     }
-    return null;
   }
-  setRole (res: any ): string | null {
-    const role =  res.body?.data?.role;
-    if(role){
-      localStorage.setItem("role", role);
-      return role;
-    }
 
-    return null;
-  }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    return !!this.tokenService.getToken();
   }
-  
 }
