@@ -3,7 +3,7 @@
 ARG NODE_VERSION=22.13.1
 
 # Build stage
-FROM node:${NODE_VERSION}-slim AS builder
+FROM node:20-alpine AS build
 WORKDIR /app
 
 # Install dependencies (only package.json and package-lock.json for layer caching)
@@ -23,24 +23,18 @@ RUN rm -rf node_modules && \
     npm ci --production
 
 # Production stage
-FROM node:${NODE_VERSION}-slim AS final
-WORKDIR /app
+FROM nginx:alpine
 
 # Create non-root user
-RUN addgroup --system appgroup && adduser --system --ingroup appgroup appuser
+COPY --from=build /app/dist/shop/browser /usr/share/nginx/html
 
 # Copy built app and production node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/server.ts ./
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-ENV NODE_ENV=production
-ENV NODE_OPTIONS="--max-old-space-size=4096"
-USER appuser
+
 
 # Expose port 4000 (commonly used for Angular Universal, adjust if needed)
-EXPOSE 4000
+EXPOSE 80
 
 # Start the server (Angular Universal SSR)
-CMD ["npm", "run", "serve:ssr:shop"]
+
