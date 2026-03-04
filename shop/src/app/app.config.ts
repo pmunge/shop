@@ -5,6 +5,7 @@ import { provideHttpClient , withInterceptors} from '@angular/common/http';
 import { routes } from './app.routes';
 import {refreshInterceptor} from './interceptors/refreshinterceptor.interceptor';
 import {jwtInterceptor} from './interceptors/jwtinterceptor.interceptor';
+import {loadingInterceptor} from './interceptors/httpinterceptor.interceptor'
 import { provideClientHydration } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
@@ -12,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(
-      withInterceptors([jwtInterceptor, refreshInterceptor])
+      withInterceptors([jwtInterceptor, refreshInterceptor, loadingInterceptor])
     ),
     provideClientHydration(),
   ],

@@ -1,0 +1,88 @@
+$primary-color: #cfa18d;
+$text-dark: #2e2e2e;
+$background-soft: #f8f5f2;
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; // content on the left
+  padding: 6rem 8%;
+  min-height: 90vh;
+  position: relative;
+  color: $text-dark;
+
+  /* Background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.5s ease-in-out; // smooth change
+
+  &__content {
+    max-width: 500px;
+    z-index: 2;
+  }
+
+  &__title {
+    font-size: 3rem;
+    line-height: 1.2;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    font-family: "Playfair Display", serif;
+    color: white;
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.5);
+  }
+
+  &__subtitle {
+    font-size: 1.1rem;
+    color: white;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: $primary-color;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 30px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid $primary-color;
+  padding: 0.9rem 2rem;
+  border-radius: 30px;
+  color: $primary-color;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: $primary-color;
+    color: white;
+  }
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 4rem 5%;
+  }
+}

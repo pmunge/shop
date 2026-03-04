@@ -1,0 +1,57 @@
+$primary-color: #cfa18d;
+$text-dark: #2e2e2e;
+$background-soft: #f8f5f2;
+
+
+.footer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Creates 3 equal columns
+    gap: 2rem;
+    padding: 3rem 8%;
+    background-color: #2e2e2e;
+    color: white;
+
+    &__section {
+        h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: $primary-color; // Use your primary color
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+
+            li {
+                margin-bottom: 0.5rem;
+
+                a {
+                    color: #ccc;
+                    text-decoration: none;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+
+        p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+    }
+
+    // Responsive for tablet
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr); // 2 columns on tablet
+    }
+
+    // Responsive for mobile
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr; // 1 column on mobile
+        text-align: center;
+        gap: 1.5rem;
+    }
+}

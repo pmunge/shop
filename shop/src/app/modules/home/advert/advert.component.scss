@@ -1,0 +1,66 @@
+.advert {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 4rem 8%;
+  background: #F2F6D0;
+}
+
+.card {
+  position: relative;
+  border: none;
+  overflow: hidden;
+  cursor: pointer;
+  height: 350px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  /* Dark gradient overlay */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.2),
+      transparent
+    );
+    z-index: 1;
+  }
+
+  .card-img-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2rem;
+    z-index: 2;
+    color: #fff;
+  }
+
+  .card-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+    opacity: 0.9;
+  }
+
+  /* Hover Effects */
+  &:hover img {
+    transform: scale(1.1);
+  }
+
+  &:hover .card-title {
+    transform: translateY(-5px);
+    transition: 0.3s ease;
+  }
+}

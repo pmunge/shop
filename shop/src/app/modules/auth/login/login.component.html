@@ -1,5 +1,5 @@
 <div class="auth-container">
-  <div class="auth-card">
+  <div class="auth-card"  [class.blur]="loadingService.loading$ | async">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
       <h2 class="auth-title">Login to your account</h2>
 
@@ -71,15 +71,17 @@
           <a routerLink="/forgot" class="auth-link">here</a>
         </p>  
       </div>
-      <button type="submit" class="btn btn-primary" >
+      <button type="submit" class="btn btn-primary" [disabled]="loadingService.loading$ | async" >
       Login
       </button>
     </form>
+    
+    
     <div class="auth-footer">
         <p> Don't have an account?
             <a routerLink="/register" class="auth-link">Sign up</a>
         </p>
     </div>
-
+  
   </div>
 </div>

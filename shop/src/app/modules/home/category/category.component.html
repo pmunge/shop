@@ -1,0 +1,33 @@
+<section class="categories">
+  <div class="categories_header">
+    <h2>Shop by Category</h2>
+    <p>Find the perfect products tailored to your wellness.</p>
+  </div>
+  <ng-container *ngIf="isBrowser">
+  <div class="categories_carousel">
+    <button class="carousel-btn prev" (click)="prevSlide()">&#10094;</button>
+
+    <div class="carousel-track-wrapper">
+      <div class="carousel-track" #track>
+        <div class="category-card" *ngFor="let category of infiniteCategories">
+          <div class="image-container">
+            <img
+              [ngSrc]="category.image"
+              [alt]="category.name"
+              width="220"
+              height="220"
+              priority
+            />
+            <div class="overlay">
+              <button class="btn-primary">Shop Now</button>
+            </div>
+          </div>
+          <h3 class="category-title">{{ category.name }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-btn next" (click)="nextSlide()">&#10095;</button>
+  </div>
+  </ng-container>
+</section>

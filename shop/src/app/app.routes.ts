@@ -4,15 +4,22 @@ import { RegisterComponent } from './modules/auth/register/register.component';
 import { ForgotPassword } from './modules/auth/forgot-password/forgot-password.component';
 import { ResetPassword } from './modules/auth/reset-password/reset-password.component';
 import { LandingComponent } from './modules/pages/landing/landing.component';
-import { HomeComponent} from './modules/user-dashboard/home/home.component';
 import { AdminComponent} from './modules/admin-dashboard/admin/admin.component';
 import { resetGuard} from './guards/reset.guard';
 import {adminGuard} from './guards/admin.guard';
-import {authGuard} from './guards/auth.guard'
-import {UserManagementComponent} from './modules/admin-dashboard/user-management/user-management.component'
+import {authGuard} from './guards/auth.guard';
+import {UserManagementComponent} from './modules/admin-dashboard/user-management/user-management.component';
+import { HomeComponent } from './modules/home/home.component';
+import { PagesComponent} from './modules/pages/pages.component';
+import { CategoryComponent } from './modules/home/category/category.component';
+import { FeaturedProductsComponent } from './modules/home/featured-products/featured-products.component';
+import { HeroComponent } from './modules/home/hero/hero.component';
 
 export const routes: Routes = [
-  { path: '', component: LandingComponent },
+  //{ 
+    //path: '', 
+    //component: LandingComponent,
+   //},
   {
     path: 'register',
     component: RegisterComponent,
@@ -21,11 +28,7 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  {
-    path: 'home',
-    component: HomeComponent,
-    canActivate: [authGuard]
-  },
+  
   {
     path: 'admin',
     component: AdminComponent,
@@ -40,8 +43,16 @@ export const routes: Routes = [
     component: ResetPassword,
     canActivate: [resetGuard],
   },
-  {
+{
     path: 'users',
     component: UserManagementComponent,
-  }
+  },
+  {
+    path: '',
+    component: PagesComponent,
+    children: [
+      {path: '', component: HomeComponent},
+    ]
+  },
+  
 ];

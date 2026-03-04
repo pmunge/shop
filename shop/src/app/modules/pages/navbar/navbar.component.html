@@ -1,0 +1,54 @@
+<!-- navbar.component.html -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">E-Shop</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <!-- Apply shouldShowItem filter to each nav item -->
+        <li class="nav-item" *ngFor="let item of navItems">
+          <!-- Only show if shouldShowItem returns true -->
+          <a
+            *ngIf="shouldShowItem(item)"
+            class="nav-link"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      </ul>
+      
+      <form class="d-flex" role="search">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+      <ul class="navbar-nav ms-2 mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="btn btn-outline-primary" routerLink="/login">
+            Login
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <button class="btn btn-custom" (click)="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

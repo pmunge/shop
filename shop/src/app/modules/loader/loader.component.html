@@ -1,0 +1,17 @@
+<div class="loader-overlay" *ngIf="loadingService.loading$ | async">
+  <div class="scene">
+    <div class="plane">
+      <ng-container *ngFor="let cube of cubes; let i = index">
+        <div class="cube cube--{{i}}">
+          <div class="cube__side"></div>
+          <div class="cube__side"></div>
+          <div class="cube__side"></div>
+          <div class="cube__side"></div>
+          <div class="cube__side"></div>
+          <div class="cube__side"></div>
+        </div>
+        <div class="shadow shadow--{{i}}"></div>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { AuthService} from '../../../services/auth-service';
 import {TokenService} from '../../../services/token.service';
+import { LoadingService } from '../../../services/loading-service.service';
 
 @Component({
   selector: 'app-login',
@@ -20,14 +21,14 @@ import {TokenService} from '../../../services/token.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  isLoading = true;
   showPassword = false;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    public loadingService: LoadingService,
   ) {}
 
   ngOnInit(): void {
@@ -43,24 +44,24 @@ export class LoginComponent implements OnInit {
       return;
        
     }
-
-    this.isLoading = true;    
+   
     const loginDetails = this.loginForm.value;
+    this.loadingService.show();
 
     this.authService.login(loginDetails).subscribe({
       next: (res) => {
-        this.isLoading = false;
         console.log(res);
+        this.loadingService.hide();
         if(this.tokenService.getRole() === "ADMIN"){
           this.router.navigateByUrl("admin")
         }
         if(this.tokenService.getRole() === "USER"){
-          this.router.navigateByUrl("home")
+          this.router.navigateByUrl("", { replaceUrl: true })
         }
       },
       error: (err) => {
-        this.isLoading = false;
         console.log(err);
+        this.loadingService.hide();
       },
     });
   }

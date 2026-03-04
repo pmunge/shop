@@ -1,0 +1,16 @@
+<section class="advert">
+  <div class="card text-bg-dark" *ngFor="let object of cardObjects">
+    <img
+              [ngSrc]="object.image"
+              width="220"
+              height="220"
+              priority
+    />
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{object.name}}</h5>
+      <p class="card-text">
+         {{object.description}}
+      </p>
+    </div>
+  </div>
+</section>
