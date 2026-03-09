@@ -3,7 +3,7 @@
 ARG NODE_VERSION=22.13.1
 
 # Build stage
-FROM node:20-alpine AS build
+FROM node:20-bookworm-slim AS build
 WORKDIR /app
 
 # Install dependencies (only package.json and package-lock.json for layer caching)
@@ -31,10 +31,7 @@ COPY --from=build /app/dist/shop/browser /usr/share/nginx/html
 # Copy built app and production node_modules
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-
-
 # Expose port 4000 (commonly used for Angular Universal, adjust if needed)
 EXPOSE 80
 
 # Start the server (Angular Universal SSR)
-
