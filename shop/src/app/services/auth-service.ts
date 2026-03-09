@@ -1,7 +1,7 @@
 import { Injectable, Inject, Optional, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment as env } from '../../envs/env';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { tap, catchError, map } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
@@ -18,6 +18,9 @@ export class AuthService {
 
   private registerapiUrl = `${this.apiUrl}/register`;
   private loginapiUrl = `${this.apiUrl}/login`;
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
+
+  isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -25,6 +28,7 @@ export class AuthService {
     @Inject(PLATFORM_ID) private platformId: Object,
     private tokenService: TokenService,
   ) {}
+  
 
   register(data: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(this.registerapiUrl, data).pipe(
@@ -44,6 +48,7 @@ export class AuthService {
         map((res: HttpResponse<AuthResponse>) => {
           this.tokenService.setToken(res);
           this.tokenService.setRole(res);
+          this.isAuthenticatedSubject.next(true)
           if (!res.body) {
             throw new Error('No response body');
           }
@@ -55,16 +60,22 @@ export class AuthService {
       );
   }
 
-  logout(): void {
+logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
       localStorage.removeItem('refreshToken');
+      this.isAuthenticatedSubject.next(false)
+
     }
+
   }
 
 
   isAuthenticated(): boolean {
     return !!this.tokenService.getToken();
+  }
+  private hasToken(): boolean {
+    return !!localStorage.getItem('token');
   }
 }

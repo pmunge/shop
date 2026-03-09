@@ -8,8 +8,8 @@ export const adminGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   const role = tokenService.getRole();
-  if (role !== Role.ADMIN) {
-    router.navigate(['/home']);
+  if (role !== Role.SUPERADMIN ) {
+    router.navigate(['/']);
     return false;
   }
 

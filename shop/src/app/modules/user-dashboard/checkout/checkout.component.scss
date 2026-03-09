@@ -1,0 +1,241 @@
+:host {
+  display: block;
+  padding: clamp(1rem, 2vw, 2rem);
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+}
+
+.checkout {
+  --brown-100: #f9f1e8;
+  --brown-200: #eddcc8;
+  --brown-300: #d8bea2;
+  --brown-500: #8f6a4f;
+  --brown-700: #5b3f2e;
+  --ink: #2c211b;
+  --pink-accent: #d98aa2;
+
+  padding: 1rem;
+  border-radius: 22px;
+  background: linear-gradient(135deg, var(--brown-100), var(--brown-200));
+  box-shadow: 0 14px 30px rgba(67, 45, 31, 0.12);
+}
+
+.checkout-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(290px, 1fr);
+  gap: 1.2rem;
+  align-items: start;
+}
+
+.cart-left,
+.checkout-details {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(193, 162, 136, 0.44);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(57, 37, 24, 0.1);
+}
+
+.cart-left {
+  padding: 0.5rem 0.85rem 0.9rem;
+}
+
+.cart-header,
+.cart-item {
+  display: grid;
+  grid-template-columns: 2.1fr 1fr 1fr 1fr;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.cart-header {
+  padding: 0.95rem 0.3rem 0.75rem;
+  border-bottom: 1px solid #f0e2d4;
+
+  span {
+    color: var(--brown-700);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.cart-item {
+  padding: 0.9rem 0.3rem;
+  border-bottom: 1px solid #f5e8dd;
+
+  &:hover {
+    background: #fff8f4;
+    border-radius: 10px;
+  }
+}
+
+.product {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+
+  img {
+    width: 66px;
+    height: 66px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #ead6c4;
+  }
+
+  .name {
+    margin: 0;
+    font-weight: 700;
+    color: var(--ink);
+  }
+}
+
+.price,
+.total {
+  font-weight: 700;
+  text-align: center;
+  color: var(--ink);
+}
+
+.qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+
+  button {
+    width: 29px;
+    height: 29px;
+    border: 1px solid #dcc0a5;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--brown-700);
+    font-weight: 800;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--brown-500);
+      color: #fff;
+    }
+  }
+
+  span {
+    min-width: 1.1rem;
+    text-align: center;
+    font-weight: 700;
+    color: var(--ink);
+  }
+}
+
+.mobile-label {
+  display: none;
+}
+
+.cart-left h3 {
+  margin: 1rem 0.4rem 0.3rem;
+  color: var(--brown-700);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.total-right {
+  margin: 0 0.4rem;
+  text-align: right;
+  color: var(--ink);
+  font-size: 1.6rem;
+}
+
+.checkout-details {
+  padding: 1rem;
+}
+
+.tab-heading {
+  margin: 0.6rem 0 0.8rem;
+  color: var(--brown-700);
+}
+
+.checkout-details input {
+  width: 100%;
+  margin-bottom: 0.7rem;
+  padding: 0.72rem 0.78rem;
+  border-radius: 9px;
+  border: 1px solid #dcc7b2;
+  background: #fffdfa;
+  color: var(--ink);
+
+  &:focus {
+    outline: none;
+    border-color: var(--brown-500);
+    box-shadow: 0 0 0 2px rgba(143, 106, 79, 0.18);
+  }
+}
+
+.submit-button {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 0.82rem;
+  margin-top: 0.45rem;
+  background: linear-gradient(120deg, #7b563e, #8f6a4f);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.submit-button:disabled {
+  opacity: 0.82;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 0.95rem;
+  padding: 0.45rem 0.6rem;
+  color: var(--brown-700);
+  text-decoration: none;
+  border-radius: 8px;
+
+  &:hover {
+    color: #fff;
+    background: var(--pink-accent);
+  }
+}
+
+:host ::ng-deep .mat-mdc-tab-group {
+  --mdc-tab-indicator-active-indicator-color: #b96d86;
+  --mat-tab-header-active-label-text-color: #7a4f3a;
+  --mat-tab-header-inactive-label-text-color: #7d6353;
+}
+
+@media (max-width: 980px) {
+  .checkout-content {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .cart-header {
+    display: none;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+    gap: 0.62rem;
+  }
+
+  .price,
+  .qty,
+  .total {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: left;
+  }
+
+  .mobile-label {
+    display: inline-flex;
+    min-width: 40px;
+    color: var(--brown-700);
+    text-transform: uppercase;
+    font-size: 0.66rem;
+    font-weight: 800;
+  }
+}

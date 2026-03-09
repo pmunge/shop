@@ -1,16 +1,11 @@
 <section class="advert">
-  <div class="card text-bg-dark" *ngFor="let object of cardObjects">
-    <img
-              [ngSrc]="object.image"
-              width="220"
-              height="220"
-              priority
-    />
-    <div class="card-img-overlay">
-      <h5 class="card-title">{{object.name}}</h5>
-      <p class="card-text">
-         {{object.description}}
-      </p>
+  <article class="promo-card" *ngFor="let object of cardObjects">
+    <img [ngSrc]="object.image" width="220" height="220" priority [alt]="object.name" />
+    <div class="promo-card__overlay"></div>
+    <div class="promo-card__content">
+      <p class="promo-card__eyebrow">Editor Pick</p>
+      <h5 class="promo-card__title">{{ object.name }}</h5>
+      <p class="promo-card__text">{{ object.description }}</p>
     </div>
-  </div>
+  </article>
 </section>

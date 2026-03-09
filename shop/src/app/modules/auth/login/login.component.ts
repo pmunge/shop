@@ -52,12 +52,8 @@ export class LoginComponent implements OnInit {
       next: (res) => {
         console.log(res);
         this.loadingService.hide();
-        if(this.tokenService.getRole() === "ADMIN"){
-          this.router.navigateByUrl("admin")
-        }
-        if(this.tokenService.getRole() === "USER"){
           this.router.navigateByUrl("", { replaceUrl: true })
-        }
+        
       },
       error: (err) => {
         console.log(err);

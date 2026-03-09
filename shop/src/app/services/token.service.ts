@@ -47,7 +47,7 @@ export class TokenService {
     }
     return token || null;
   }
-
+  
   setRole(res: any): string | null {
     const role = res.body?.data?.role;
     if (role && isPlatformBrowser(this.platformId)) {

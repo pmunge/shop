@@ -1,0 +1,29 @@
+<section class="products">
+  <div class="products__header">
+    <p class="eyebrow">Catalog</p>
+    <h2>All Products</h2>
+    <p>Browse our complete collection of wellness and beauty essentials.</p>
+  </div>
+
+  <p *ngIf="isLoading" class="loading">Loading products...</p>
+
+  <div class="products__grid" *ngIf="!isLoading && products.length; else emptyState">
+    <article class="product-card" *ngFor="let product of products">
+      <div class="product-image">
+        <img [src]="product.imageUrl" [alt]="product.name" />
+      </div>
+
+      <div class="product-info">
+        <p class="category">{{ product.category }}</p>
+        <h3>{{ product.name }}</h3>
+        <p class="price">KES {{ product.price }}</p>
+
+        <button class="add-btn" type="button" (click)="selectProduct(product)">Add to Cart</button>
+      </div>
+    </article>
+  </div>
+
+  <ng-template #emptyState>
+    <p class="empty">No products are available right now.</p>
+  </ng-template>
+</section>

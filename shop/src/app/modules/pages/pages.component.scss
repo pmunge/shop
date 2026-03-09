@@ -1,0 +1,27 @@
+.pages-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+app-navbar {
+    flex: 0 0 auto;
+}
+
+app-footer {
+    flex: 0 0 auto;
+    margin-top: auto;
+}
+
+// All other elements (router-outlet replaced components)
+.pages-wrapper > app-user-management,
+.pages-wrapper > app-admin-management,
+.pages-wrapper > app-home,
+.pages-wrapper > app-cart,
+.pages-wrapper > app-category,
+.pages-wrapper > app-featured-products,
+.pages-wrapper > app-hero {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,69 @@
+<div class="checkout">
+  <div class="checkout-content">
+    <div class="cart-wrapper">
+      <div class="cart-left">
+        <div class="cart-header">
+          <span>Product</span>
+          <span>Price</span>
+          <span>Qty</span>
+          <span>Total</span>
+        </div>
+
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="product">
+            <img [src]="item.image" />
+            <div>
+              <p class="name">{{ item.name }}</p>
+            </div>
+          </div>
+
+          <div class="price">
+            <span class="mobile-label">Price</span>
+            ${{ item.price }}
+          </div>
+
+          <div class="qty">
+            <span class="mobile-label">Qty</span>
+            <button (click)="decrease(item)">-</button>
+            <span>{{ item.quantity }}</span>
+            <button (click)="increase(item)">+</button>
+          </div>
+
+          <div class="total">
+            <span class="mobile-label">Total</span>
+            ${{ item.price * item.quantity }}
+          </div>
+        </div>
+
+        <h3>Cart Total</h3>
+        <h2 class="total-right">${{ getCartTotal() }}</h2>
+      </div>
+    </div>
+
+    <div class="checkout-details">
+      <form [formGroup]="checkoutForm">
+        <div class="tab-content">
+          <mat-tab-group>
+            <mat-tab label="Information" id="one">
+              <h5 class="tab-heading">Customer information</h5>
+              <input type="text" placeholder="firstname" formControlName="firstName" />
+              <input type="email" placeholder="email" formControlName="email" />
+              <input type="text" placeholder="phone" formControlName="phone" />
+              <input type="text" placeholder="location" formControlName="location" />
+            </mat-tab>
+
+            <mat-tab label="Payment" id="two">
+              <h5 class="tab-heading">Payment Details</h5>
+              <input type="text" placeholder="Card Number" formControlName="cardId" />
+              <input type="text" placeholder="expDate" formControlName="expiryDate" />
+              <input type="text" placeholder="that other number" formControlName="no" />
+              <button disabled class="submit-button">Pay now</button>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <a class="back-link" routerLink="/cart">Back to cart</a>
+</div>

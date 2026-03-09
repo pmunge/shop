@@ -1,3 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '@fortawesome/fontawesome-free/css/all.min.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+:root {
+  --theme-brown-100: #f9f1e8;
+  --theme-brown-200: #eddcc8;
+  --theme-brown-500: #8f6a4f;
+  --theme-brown-700: #5b3f2e;
+  --theme-ink: #2c211b;
+  --theme-pink-accent: #d08ba0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--theme-ink);
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
+  background: linear-gradient(180deg, #fffaf5 0%, #f6ecdf 100%);
+}
+
+button,
+.btn {
+  border-radius: 10px;
+}
+
+input,
+textarea,
+select {
+  border-radius: 8px;
+}

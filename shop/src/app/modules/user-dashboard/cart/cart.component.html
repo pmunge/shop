@@ -1,0 +1,42 @@
+<div class="cart-wrapper">
+    <div class="cart-left">
+        <div class="cart-header">
+            <span> Product</span>
+            <span>Price</span>
+            <span>Qty</span>
+            <span> Total</span>
+        </div>
+        <div class="cart-item" *ngFor="let item of cartItems">
+            <div class="product">
+                <img [src]="item.image" />
+                <div>
+                    <p class="name">{{item.name}}</p>
+                </div>
+            </div>
+            <div class="price">
+                <span class="mobile-label">Price</span>
+                ${{item.price}}
+            </div>
+            <div class="qty">
+                <span class="mobile-label">Qty</span>
+                <button (click)=" decrease(item)">-</button>
+                <span> {{item.quantity}}</span>
+                <button (click)="increase(item)">+</button>
+            </div>
+            <div class="total">
+                <span class="mobile-label">Total</span>
+                ${{item.price*item.quantity}}
+            </div>
+        </div>
+    </div>
+    <div class="cart-right">
+        <div class="summary-card">
+            <h3> Cart Total</h3>
+            <h2> ${{getCartTotal()}}</h2>
+
+            <button class="checkout" routerLink="/checkout">
+                Checkout
+            </button>
+        </div>
+    </div>
+</div>

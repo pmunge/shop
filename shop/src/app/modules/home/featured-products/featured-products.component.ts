@@ -17,7 +17,7 @@ export class FeaturedProductsComponent implements OnInit {
   constructor(private productService: ProductsService){}
 
   ngOnInit(): void {
-    this.productService.getFeaturedProducts().subscribe({
+    this.productService.getProducts().subscribe({
       next: (data: FeaturedCategory[]) =>{
         this.featuredCategories = data;
         this.isLoading = false;

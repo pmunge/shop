@@ -21,11 +21,11 @@ export class NavbarComponent {
 
   navItems = [
     { path: '/', label: 'Home',  },
-    { path: '/tours', label: 'Products' , showWhen: 'always'},
-    { path: '/about', label: 'Cart', showWhen: 'authenticated', requiredRole: 'USER' },
-    { path: '/contact', label: 'Orders', showWhen: 'authenticated', requiredRole: 'USER' },
-    { path: '/contact', label: 'Users', showWhen: 'authenticated', requiredRole: 'ADMIN' },
-    { path: '/contact', label: 'Admins', showWhen: 'authenticated', requiredRole: 'SUPERADMIN' },
+    { path: '/products', label: 'Products' , showWhen: 'always'},
+    { path: '/carts', label: 'Cart', showWhen: 'authenticated', requiredRole: 'USER' },
+    { path: '/orders', label: 'Orders', showWhen: 'authenticated', requiredRole: 'USER' },
+    { path: '/users', label: 'Users', showWhen: 'authenticated', requiredRole: 'ADMIN' },
+    { path: '/admin', label: 'Admins', showWhen: 'authenticated', requiredRole: 'SUPERADMIN' },
   ];
 
   shouldShowItem(item: any): boolean{

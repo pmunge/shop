@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpResponse} from '@angular/common/http';
 import { Observable} from 'rxjs';
 
 import {Product} from '../models/product'
@@ -23,7 +23,22 @@ export class ProductsService {
 
   constructor( private http: HttpClient) { }
 
-  getFeaturedProducts(): Observable<FeaturedCategory []>{
-    return this.http.get<FeaturedCategory[]>(this.featuredProductsUrl)
+  newProduct(): Observable <any>{
+    return this.http.post<any>(this.productsUrl, ReportBody)
+  }
+  getProducts(): Observable<any>{
+    return this.http.get<any>(this.productsUrl)
+  }
+  getProductById(productId : string | number) : Observable<any>{
+    return this.http.get<any>(this.productsUrl)
+  }
+  updateProductInfo(productId: string | number, info: string): Observable<any>{
+    return this.http.put<any>(this.productsUrl.replace(`{productId}`, String(productId)), ReportBody)
+  }
+  updateProductPrice(productId: string | number, price: string | number): Observable<any>{
+    return this.http.put<any>(this.productsUrl.replace(`{productId}`, String(productId)), ReportBody)
+  }
+  updateProductInventory(productId: string | number, inventory: number): Observable<any>{
+    return this.http.put<any>(this.productsUrl.replace(`{productId}`,  String(productId)), ReportBody)
   }
 }

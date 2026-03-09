@@ -1,86 +1,112 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { RouterModule } from '@angular/router';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { AdminService} from '../../../services/admin.service';
+import { AdminService } from '../../../services/admin.service';
+import { Admin } from '../../../models/admin';
 
 @Component({
   selector: 'app-admin-management',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, RouterModule, MatTableModule, MatPaginator, MatSelectModule],
   templateUrl: './admin-management.component.html',
-  styleUrl: './admin-management.component.scss'
+  styleUrl: './admin-management.component.scss',
 })
-export class AdminManagementComponent  implements OnInit{
-  
-  isModalOpen = false;
-  isDetailsOpen= false;
-  isLoading = true;
+export class AdminManagementComponent implements OnInit, AfterViewInit {
   admins: any[] = [];
-  admin = { firstName: '', secondName: '', email:'', role: ''} 
-  
+  admin: Admin = {
+    id: 0,
+    firstName: '',
+    secondName: '',
+    email: '',
+    role: '',
+    locked: false,
+  };
+  displayedColumns: string[] = ['id', 'firstName', 'secondName', 'email', 'role', 'locked', 'actions'];
 
-  constructor (
-    private adminService : AdminService
-  ){}
+  dataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  ngOnInit (){
-    this.loadAllAdmins ()
+  constructor(
+    private adminService: AdminService,
+    private snackbar: MatSnackBar,
+  ) {}
+
+  ngOnInit() {
+    this.loadAllAdmins();
   }
 
-  addNewAdmin(){
-    this.adminService.registerAdmin(this.admin).subscribe({
-      next: (res) =>{
-        this.loadAllAdmins(); // refresh list
-        this.isModalOpen = false
-        this.admin = { firstName: '', secondName: '', email: '', role: '' }; // reset form
-        console.log(res)
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  changeStatus(userId: number, status: string) {
+    this.adminService.updateStatus(userId, status).subscribe({
+      next: () => {
+        this.loadAllAdmins();
       },
       error: (err) => {
-        console.error(err)
-      }
-    })
-
-  }
-  changeStatus(userId: number , status: string) {
-    this.adminService.updateStatus(userId, status).subscribe({
-      next: (res) => console.log(res),
-      error: (err) => console.error(err)
-    })
-
-  }
-  changeRole(userId: number, role: string){
-    this.adminService.updateRole(userId, role).subscribe({
-      next:(res) => console.log(res),
-      error: (err) => console.error(err)
-    })
-
-  }
-  loadAllAdmins(): void{
-    this.isLoading = true;
-    this.adminService.getAdmins().subscribe({
-      next:(res) => {
-        this.admins = res.body?.data
-        this.isLoading = false;
+        const errorMessage = err?.error?.message || 'Failed to update admin status.';
+        this.snackbar.open(errorMessage, 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
+        console.error(err);
       },
-      error : (err) => {
-        console.error(err)
-        this.isLoading = false;
-      }
-    })
-
+    });
   }
+
+  changeRole(userId: number, role: string) {
+    this.adminService.updateRole(userId, role).subscribe({
+      next: () => {
+        this.loadAllAdmins();
+      },
+      error: (err) => {
+        const errorMessage = err?.error?.message || 'Failed to update admin role.';
+        this.snackbar.open(errorMessage, 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
+        console.error(err);
+      },
+    });
+  }
+
+  loadAllAdmins(): void {
+    this.adminService.getAdmins().subscribe({
+      next: (res) => {
+        const payload = res.body?.data;
+        this.dataSource.data = Array.isArray(payload) ? payload : payload?.admins ?? [];
+      },
+      error: (err) => {
+        this.dataSource.data = [];
+        const errorMessage = err?.error?.message || 'Failed to load admins.';
+        this.snackbar.open(errorMessage, 'Close', {
+          duration: 3500,
+          panelClass: ['snackbar-error'],
+        });
+        console.error(err);
+      },
+    });
+  }
+
   getAdmin(userId: number) {
     this.adminService.getAdmin(userId).subscribe({
       next: (res) => {
         this.admin = res.body;
-        this.isDetailsOpen = true;
       },
       error: (err) => {
-        console.error(err)
-      }
-    })
-
+        const errorMessage = err?.error?.message || 'Failed to load admin details.';
+        this.snackbar.open(errorMessage, 'Close', {
+          duration: 3000,
+          panelClass: ['snackbar-error'],
+        });
+        console.error(err);
+      },
+    });
   }
-
 }
