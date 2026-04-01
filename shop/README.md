@@ -1,42 +1,70 @@
-## Running the Project with Docker
+# Shop
 
-This project provides a Docker setup for building and running the application using Node.js version `22.13.1` (as specified in the Dockerfile). The application exposes port `4000` for access, which is mapped in the Docker Compose configuration.
+Angular 18 ecommerce frontend with SSR support, admin dashboards, and a brown-toned UI theme. This repo includes both client and server build targets and can run locally or via Docker.
 
-### Build and Run Instructions
+## Tech Stack
+- Angular 18 (standalone components)
+- Angular Material + Bootstrap
+- Font Awesome
+- SSR via `@angular/ssr`
+- Node/Express for SSR hosting
 
-1. **Build and start the application:**
+## Key Features
+- Public storefront (home, products, cart, checkout)
+- Auth flows (login/register/reset)
+- Admin dashboard (users/admins/products/orders)
+- Responsive UI with themed components
 
-   ```bash
-   docker compose up --build
-   ```
+## Project Structure
+- `src/app/modules/home` – landing page sections
+- `src/app/modules/products` – product listing
+- `src/app/modules/user-dashboard` – cart/checkout/orders
+- `src/app/modules/admin-dashboard` – admin panels
+- `src/app/services` – API services + interceptors
+- `src/envs` – environment config
+- `src/styles.scss` – global styles + theme tokens
 
-   This command builds the Docker image and starts the container. The application will be available on port `4000`.
+## Environment
+- `src/envs/env.ts` – admin API base (default: `http://localhost:8081/api/admin`)
+- `src/envs/env.development.ts` – public API base
+- `src/proxy.conf.json` – local API proxy for `/api`
 
-2. **Access the application:**
+If you run locally and your backend is elsewhere, update `env.ts` / `env.development.ts`.
 
-   Open your browser and navigate to:
+## Local Development
+```bash
+npm install
+npm run start
+```
+Default dev server: `http://localhost:4200`
 
-   ```
-   http://localhost:4000
-   ```
+## Build
+```bash
+npm run build
+```
 
-### Project-Specific Details
+## SSR Serve (after build)
+```bash
+npm run serve:ssr:shop
+```
 
-- **Node Version:** The Dockerfile uses Node.js `22.13.1-slim`.
-- **Dependencies:** Production dependencies are installed after the build step for a lean final image.
-- **User:** The container runs as a non-root user (`appuser`) for security.
-- **Ports:**
-  - `4000` is exposed by the application and mapped in Docker Compose.
-- **Environment Variables:**
-  - `NODE_ENV=production` and `NODE_OPTIONS="--max-old-space-size=4096"` are set in the container.
-  - No additional environment variables are required unless you add a `.env` file (see `docker-compose.yml`).
+## Docker
+```bash
+docker compose up --build
+```
+App will be available on port `4000`.
 
-### Special Configuration
+## Useful Scripts
+- `npm run start` – dev server
+- `npm run build` – production build
+- `npm run watch` – build + watch
+- `npm run test` – unit tests
+- `npm run serve:ssr:shop` – serve SSR output
 
-- No external services (such as databases) are required for this setup.
-- No persistent volumes or custom networks are defined.
-- If you need to add environment variables, uncomment the `env_file` line in `docker-compose.yml` and provide a `.env` file.
+## Notes
+- This project uses Angular SSR. Any direct `localStorage` access must be guarded for server rendering.
+- Production build budgets are defined in `angular.json` and may require adjustment as styles grow.
 
 ---
 
-_These instructions are up to date with the current Docker setup. If you add new services or environment variables, update this section accordingly._
+If you want a more detailed README (API docs, screenshots, or architecture), tell me what to include.
