@@ -7,9 +7,24 @@ export const loadingInterceptor: HttpInterceptorFn = (req, next) => {
 
   const loadingService = inject(LoadingService);
 
-  loadingService.show();
+  const url = req.url;
+  const shouldShowLoader =
+    req.method === 'POST' && (
+      url.includes('/auth/login') ||
+      url.includes('/auth/register') ||
+      url.includes('/auth/admins/register') ||
+      url.includes('/product/product')
+    );
+
+  if (shouldShowLoader) {
+    loadingService.show();
+  }
 
   return next(req).pipe(
-    finalize(() => loadingService.hide())
+    finalize(() => {
+      if (shouldShowLoader) {
+        loadingService.hide();
+      }
+    })
   );
 };

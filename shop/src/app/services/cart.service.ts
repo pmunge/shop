@@ -9,14 +9,13 @@ import {Product} from '../models/product'
   providedIn: 'root'
 })
 export class CartService {
-  private cartItems = new BehaviorSubject<Product[]>([])
-  
-  constructor(
-    cartItems$ = this.cartItems.asObservable(),
-  ) { }
+  private cartItems = new BehaviorSubject<Product[]>([]);
+  readonly cartItems$ = this.cartItems.asObservable();
+
+  constructor() {}
 
   addToCart(product: Product){
     const currentItems = this.cartItems.value;
-    this.cartItems.next([...currentItems, product])
+    this.cartItems.next([...currentItems, product]);
   }
 }

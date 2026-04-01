@@ -75,8 +75,34 @@
   }
 }
 
+.search-form {
+  position: relative;
+  align-items: center;
+}
+
+.search-input {
+  padding-right: 2.6rem;
+  margin-right: 0;
+}
+
+.search-btn {
+  position: absolute;
+  right: 0.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+}
+
 .btn-outline-success {
-  border: 1px solid var(--accent);
+  //border: 1px solid var(--accent);
   color: #fff;
   background: transparent;
   border-radius: 0;
@@ -129,6 +155,10 @@
   }
 
   .d-flex {
+    margin-top: 0.65rem;
+  }
+
+  .navbar-nav.ms-2 {
     margin-top: 0.65rem;
   }
 }
