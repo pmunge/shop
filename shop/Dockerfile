@@ -9,6 +9,10 @@ WORKDIR /app
 # Install dependencies (only package.json and package-lock.json for layer caching)
 COPY --link package.json package-lock.json ./
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends python3 make g++ && \
+    rm -rf /var/lib/apt/lists/*
+
 RUN --mount=type=cache,target=/root/.npm \
     npm ci
 
